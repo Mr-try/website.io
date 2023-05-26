@@ -1,10 +1,37 @@
-.navs {
-  ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-  }
-  li {
-    margin-right: 1em;
+.body {
+  background-color: #fff;
+  max-width       : 1440px;
+  margin          : 0 auto;
+
+  .nav {
+    height: 72px;
+
+    .navActive,
+    .navNormal {
+      cursor     : pointer;
+      margin-left: 50px;
+      font-size  : 2rem;
+      color      : #000000;
+      position   : relative;
+      transition : all 0.3s;
+
+      &::after {
+        border-radius: 4px;
+        transition   : all 0.3s;
+        content      : ' ';
+        position     : absolute;
+        bottom       : -4px;
+        left         : 0;
+        right        : 0;
+        height       : 4px;
+        background   : #fff;
+      }
+    }
+
+    .navActive {
+      &::after {
+        background: #3D2E2E;
+      }
+    }
   }
 }

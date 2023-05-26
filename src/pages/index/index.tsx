@@ -6,7 +6,7 @@
 export default function HomePage() {
   return (
     <div>
-      <h2>try! Welcome to umi!</h2>
+      <h2>todo</h2>
     </div>
   );
 }

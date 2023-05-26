@@ -6,10 +6,20 @@
 import { defineConfig } from "umi";
 
 export default defineConfig({
-  routes: [
-    { path: "/", component: "index" },
-    { path: "/docs", component: "docs" },
-  ],
+  // routes: [
+  //   { path: "/", component: "index" },
+  //   { path: "/docs", component: "docs" },
+  // ],
   outputPath: 'docs',
   npmClient: 'pnpm',
+  headScripts: [
+    `window.addEventListener("resize", this.setFontSize);
+    function setFontSize() {
+      const designedWidth = 1440;
+      const fontSize = document.documentElement.clientWidth / designedWidth
+      document.documentElement.style.fontSize = fontSize * 10 + 'px';
+    }
+    setFontSize()`,
+  ],
+  theme: { '@primary-color': '#000000', '@step': '24px' }
 });
