@@ -10,6 +10,9 @@ export default defineConfig({
   //   { path: "/", component: "index" },
   //   { path: "/docs", component: "docs" },
   // ],
+  copy: [
+    { from: 'CNAME', to: 'docs' }
+  ],
   exportStatic: {},
   outputPath: 'docs',
   npmClient: 'pnpm',
