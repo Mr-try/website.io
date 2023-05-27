@@ -9,6 +9,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "svg-text-animate": "^1.3.3",
     "umi": "^4.0.69"
   },
   "devDependencies": {

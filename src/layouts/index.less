@@ -1,6 +1,8 @@
 .body {
   background-color: #fff;
   max-width       : 1440px;
+  min-width       : 1200px;
+  padding         : 0 2rem;
   margin          : 0 auto;
 
   .nav {
@@ -10,28 +12,27 @@
     .navNormal {
       cursor     : pointer;
       margin-left: 50px;
-      font-size  : 2rem;
+      font-size  : 18px;
       color      : #000000;
       position   : relative;
       transition : all 0.3s;
-
-      &::after {
-        border-radius: 4px;
-        transition   : all 0.3s;
-        content      : ' ';
-        position     : absolute;
-        bottom       : -4px;
-        left         : 0;
-        right        : 0;
-        height       : 4px;
-        background   : #fff;
-      }
     }
 
-    .navActive {
-      &::after {
-        background: #3D2E2E;
-      }
-    }
+    .navActive {}
+
+  }
+
+  .navWrap {
+    position: relative;
+  }
+
+  .activeLine {
+    transition: all 0.3s;
+    content   : ' ';
+    position  : absolute;
+    bottom    : -4px;
+    left      : 0;
+    height    : 0.2rem;
+    background: #3D2E2E;
   }
 }

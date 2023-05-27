@@ -10,7 +10,7 @@ export default defineConfig({
   //   { path: "/", component: "index" },
   //   { path: "/docs", component: "docs" },
   // ],
-  title: '------------',
+  title: "-----try's-------",
   copy: [
     { from: 'CNAME', to: 'docs' }
   ],
