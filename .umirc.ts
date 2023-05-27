@@ -10,6 +10,7 @@ export default defineConfig({
   //   { path: "/", component: "index" },
   //   { path: "/docs", component: "docs" },
   // ],
+  exportStatic: {},
   outputPath: 'docs',
   npmClient: 'pnpm',
   headScripts: [
