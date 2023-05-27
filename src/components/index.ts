@@ -5,4 +5,5 @@
  */
 
 import Flex from './Flex'
-export { Flex }
+import Article from './Article'
+export { Flex, Article }

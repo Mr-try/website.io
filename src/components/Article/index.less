@@ -1,0 +1,59 @@
+.articleTop {
+  margin-top: 80px;
+  position  : relative;
+
+  .title {
+    max-height : 122px;
+    font-family: 'Inter';
+    font-style : normal;
+    font-weight: 600;
+    font-size  : 50px;
+    line-height: 61px;
+    color      : #3D2E2E;
+  }
+
+  .contentOpen,
+  .contentClose {
+    padding-right: 1rem;
+    text-indent  : 2rem;
+    overflow     : hidden;
+    transition   : all 0.3s;
+    height       : 323px;
+    font-weight  : 600;
+    line-height  : 2rem;
+    color        : #000000;
+  }
+
+  .contentClose {
+    padding-bottom: 5rem;
+  }
+
+  .contentOpen {
+    height: auto;
+  }
+
+  .cover {
+    background-size  : cover;
+    background-repeat: no-repeat;
+    width            : 41.8%;
+    filter           : drop-shadow(0px 18px 65px rgba(61, 46, 46, 0.3));
+    border-radius    : 20px;
+  }
+
+  .readmoreWrap {
+    bottom    : 0;
+    position  : absolute;
+    width     : calc(58.2% - 1rem);
+    background: rgba(255, 255, 255, 0.8);
+
+    .readmore {
+      cursor          : pointer;
+      // border       : 2px solid #000000;
+      border-radius   : 12px;
+      padding         : 0.8rem 1.2rem;
+      font-weight     : 500;
+      font-size       : 1.2rem;
+      color           : #000000;
+    }
+  }
+}

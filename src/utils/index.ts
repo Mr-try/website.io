@@ -7,3 +7,7 @@ import { history } from 'umi'
 export const goto = (url: string) => {
   history.push(url)
 }
+
+export const fetchFile = (url: string) => {
+  return fetch(url).then(res => res.text())
+}
