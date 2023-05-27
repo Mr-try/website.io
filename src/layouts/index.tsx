@@ -24,7 +24,7 @@ export default function Layout() {
   const [style, setStyle] = useState({});
   useEffect(() => {
     const handle = new SVGTextAnimate(
-      './Apalu-3.ttf',
+      '/Apalu-3.ttf',
       {
         duration: 300,
         direction: 'normal',
@@ -60,7 +60,7 @@ export default function Layout() {
         justifyContent="space-between"
         className={styles.nav}
       >
-        <div id="logo">logo设计中</div>
+        <div id="logo" />
         <Flex className={styles.navWrap}>
           {NAVS.map((nav, j) => (
             <div
