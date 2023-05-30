@@ -5,28 +5,18 @@
  */
 import { Outlet } from 'umi';
 import styles from './index.less';
-import './reset.less';
 import { Flex } from '@/components';
-import { useLocation } from 'react-router';
-import { goto } from '@/utils';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import SVGTextAnimate from 'svg-text-animate';
+import SearchIcon from '@/assets/search.png';
+import './reset.less';
 
-const NAVS = [
-  { title: '瞎看', link: '/' },
-  { title: 'todo', link: '/todo' },
-  { title: '文章', link: '/post' },
-  { title: '我', link: '/me' },
-];
 export default function Layout() {
-  const { pathname } = useLocation();
-  const [index, setIndex] = useState(0);
-  const [style, setStyle] = useState({});
   useEffect(() => {
     const handle = new SVGTextAnimate(
       '/Apalu-3.ttf',
       {
-        duration: 300,
+        duration: 900,
         direction: 'normal',
         'fill-mode': 'forwards',
         delay: 150,
@@ -39,19 +29,9 @@ export default function Layout() {
       },
     );
     handle.setFont().then(() => {
-      handle.create("Try's", '#logo');
+      handle.create('Try', '#logo');
     });
   }, []);
-  useEffect(() => {
-    const crt: any = document.querySelectorAll('.navCell')[index];
-    if (crt) {
-      setStyle(() => ({
-        transform: `translate3d(${crt.offsetLeft}px,0,0)`,
-        width: crt.offsetWidth,
-      }));
-    }
-  }, [index]);
-  console.log('location', location);
 
   return (
     <div className={styles.body}>
@@ -61,22 +41,9 @@ export default function Layout() {
         className={styles.nav}
       >
         <div id="logo" />
-        <Flex className={styles.navWrap}>
-          {NAVS.map((nav, j) => (
-            <div
-              className={`${
-                pathname === nav.link ? styles.navActive : styles.navNormal
-              } navCell`}
-              key={nav.title}
-              onClick={() => {
-                setIndex(j);
-                goto(nav.link);
-              }}
-            >
-              {nav.title}
-            </div>
-          ))}
-          <div style={style} className={styles.activeLine}></div>
+        <Flex alignItems="center" className={styles.searchWrap}>
+          <img src={SearchIcon} />
+          <input className={styles.input} />
         </Flex>
       </Flex>
       <Outlet />

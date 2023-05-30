@@ -54,4 +54,33 @@
     height    : 0.2rem;
     background: #3D2E2E;
   }
+
+  .searchWrapActive,
+  .searchWrap {
+    border-radius: 100px;
+    border       : 1px solid @primary-color;
+    border-radius: 20px;
+    padding      : 4px 10px;
+    width        : 200px;
+    transition   : 0.3s;
+
+    img {
+      height: 18px;
+      width : 18px;
+    }
+
+    input {
+      height: 24px;
+      border: 0;
+      flex  : 1;
+
+      &:focus-visible {
+        outline: unset
+      }
+    }
+  }
+
+  .searchWrapActive {
+    width: 450px;
+  }
 }
