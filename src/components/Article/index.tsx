@@ -39,14 +39,6 @@ Article.Top = (props: ArticleProps) => {
           style={{ backgroundImage: `url(${cover})` }}
         />
       </Flex>
-      <div className={styles.readmoreWrap}>
-        <Flex.Center
-          className={styles.readmore}
-          onClick={() => setOpen((pre) => !pre)}
-        >
-          阅读更多
-        </Flex.Center>
-      </div>
     </div>
   );
 };

@@ -11,7 +11,7 @@ export default function HomePage() {
   console.log('data', data);
 
   const article = {
-    title: '郑伯克段于鄢',
+    title: '改造中',
     content: data,
     date: '2023-5-27',
     cover: 'https://img6.bdstatic.com/img/image/pcindex/sunjunpchuazhoutu.JPG',

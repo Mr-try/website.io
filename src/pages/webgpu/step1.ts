@@ -4,6 +4,7 @@
  * @Description: 
  */
 const init = async () => {
+  const GRID_SIZE = 4;
   const canvas: any = document.querySelector('canvas');
   const navigator: any = window.navigator
   const GPUBufferUsage: any = (window as any).GPUBufferUsage
@@ -62,6 +63,49 @@ const init = async () => {
     }],
   };
 
+  const cellShaderModule = device.createShaderModule({
+    label: "Cell shader",
+    code: `
+    @vertex
+    fn vertexMain(@location(0) pos: vec2f) ->
+      @builtin(position) vec4f {
+      return vec4f(pos, 0, 1);
+    }
+
+    @fragment
+    fn fragmentMain() -> @location(0) vec4f {
+      return vec4f(1, 0, 0, 1);
+    }
+    `
+  });
+
+  const cellPipeline = device.createRenderPipeline({
+    label: 'Cell pipeline',
+    layout: 'auto',
+    vertex: {
+      module: cellShaderModule,
+      entryPoint: 'vertexMain',
+      buffers: [vertexBufferLayout]
+    },
+    fragment: {
+      module: cellShaderModule,
+      entryPoint: 'fragmentMain',
+      targets: [{ format: canvasFormat }]
+    }
+  })
+
+  const uniformArray = new Float32Array([GRID_SIZE, GRID_SIZE]);
+  const uniformBuffer = device.createBuffer({
+    label: "Grid Uniforms",
+    size: uniformArray.byteLength,
+    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+  });
+  device.queue.writeBuffer(uniformBuffer, 0, uniformArray);
+
+
+  pass.setPipeline(cellPipeline)
+  pass.setVertexBuffer(0, vertexBuffer)
+  pass.draw(vertices.length / 2)
   pass.end()
   device.queue.submit([encoder.finish()]);
 };
