@@ -1,0 +1,107 @@
+@import '../layouts/index.less';
+
+.container {
+  min-height     : calc(100vh - 160px);
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+  padding        : 40px;
+
+  .content {
+    text-align: center;
+    max-width : 800px;
+
+    .title {
+      font-size              : 3rem;
+      font-weight            : 700;
+      background             : @accent-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip        : text;
+      margin-bottom          : 24px;
+    }
+
+    .subtitle {
+      font-size    : 1.25rem;
+      color        : @text-secondary;
+      margin-bottom: 60px;
+    }
+
+    .downloadButtons {
+      display        : flex;
+      gap            : 24px;
+      justify-content: center;
+      margin-bottom  : 80px;
+      flex-wrap      : wrap;
+
+      .downloadBtn {
+        padding      : 20px 40px;
+        background   : linear-gradient(145deg, @bg-secondary, @bg-tertiary);
+        color        : @text-primary;
+        border       : 1px solid @border-color;
+        border-radius: 16px;
+        font-size    : 18px;
+        font-weight  : 600;
+        cursor       : pointer;
+        transition   : all 0.3s ease;
+        min-width    : 200px;
+
+        &:hover {
+          transform   : translateY(-4px);
+          border-color: @accent-primary;
+          box-shadow  : 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
+    .qrSection {
+      .qrCode {
+        display      : inline-block;
+        background   : @bg-secondary;
+        border       : 1px solid @border-color;
+        border-radius: 20px;
+        padding      : 40px;
+
+        .qrPlaceholder {
+          width          : 200px;
+          height         : 200px;
+          background     : @bg-tertiary;
+          border-radius  : 16px;
+          display        : flex;
+          align-items    : center;
+          justify-content: center;
+          font-size      : 4rem;
+          margin-bottom  : 20px;
+        }
+
+        p {
+          color    : @text-secondary;
+          font-size: 16px;
+          margin   : 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+
+    .content {
+      .title {
+        font-size: 2rem;
+      }
+
+      .downloadButtons {
+        flex-direction: column;
+        align-items   : center;
+
+        .downloadBtn {
+          width    : 100%;
+          max-width: 300px;
+        }
+      }
+    }
+  }
+}

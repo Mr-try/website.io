@@ -16,6 +16,350 @@
   }
 }
 
+// 深色科技主题色彩变量
+@bg-primary      : #0a0a0a;
+@bg-secondary    : #111111;
+@bg-tertiary     : #1a1a1a;
+@accent-primary  : #ffd700;
+@accent-secondary: #ffed4e;
+@accent-gradient : linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+@text-primary    : #ffffff;
+@text-secondary  : #cccccc;
+@text-muted      : #888888;
+@border-color    : #333333;
+@glow-primary    : rgba(255, 215, 0, 0.3);
+@glow-secondary  : rgba(255, 215, 0, 0.1);
+
+.container {
+  min-height : 100vh;
+  background : @bg-primary;
+  color      : @text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position   : relative;
+  overflow-x : hidden;
+
+  // 光影特效
+  .glowEffect {
+    position      : fixed;
+    width         : 600px;
+    height        : 600px;
+    background    : radial-gradient(circle, @glow-primary 0%, transparent 70%);
+    border-radius : 50%;
+    pointer-events: none;
+    z-index       : 1;
+    transition    : all 0.3s ease;
+    filter        : blur(40px);
+  }
+
+  // 粒子背景
+  .particleBackground {
+    position      : fixed;
+    top           : 0;
+    left          : 0;
+    width         : 100%;
+    height        : 100%;
+    pointer-events: none;
+    z-index       : 1;
+
+    .particle {
+      position     : absolute;
+      width        : 2px;
+      height       : 2px;
+      background   : @accent-primary;
+      border-radius: 50%;
+      opacity      : 0.6;
+      animation    : float infinite ease-in-out;
+
+      &:nth-child(odd) {
+        background: @accent-secondary;
+        opacity   : 0.4;
+      }
+    }
+  }
+
+  // 顶部导航
+  .header {
+    position       : fixed;
+    top            : 0;
+    left           : 0;
+    right          : 0;
+    z-index        : 100;
+    backdrop-filter: blur(20px);
+    border-bottom  : 1px solid @border-color;
+
+    .headerContent {
+      max-width      : 1400px;
+      margin         : 0 auto;
+      padding        : 0 40px;
+      height         : 80px;
+      display        : flex;
+      align-items    : center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display    : flex;
+      align-items: center;
+      gap        : 12px;
+      font-size  : 1.5rem;
+      font-weight: 700;
+
+      .logoIcon {
+        font-size: 2rem;
+        filter   : drop-shadow(0 0 10px @glow-primary);
+      }
+
+      .logoText {
+        background             : @accent-gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip        : text;
+      }
+    }
+
+    .headerActions {
+      display: flex;
+      gap    : 16px;
+
+      .loginBtn {
+        padding      : 8px 24px;
+        background   : transparent;
+        color        : @text-secondary;
+        border       : 1px solid @border-color;
+        border-radius: 8px;
+        cursor       : pointer;
+        transition   : all 0.3s ease;
+
+        &:hover {
+          color       : @text-primary;
+          border-color: @accent-primary;
+          box-shadow  : 0 0 20px @glow-secondary;
+        }
+      }
+
+      .signupBtn {
+        padding      : 8px 24px;
+        background   : @accent-gradient;
+        color        : @bg-primary;
+        border       : none;
+        border-radius: 8px;
+        font-weight  : 600;
+        cursor       : pointer;
+        transition   : all 0.3s ease;
+
+        &:hover {
+          transform : translateY(-2px);
+          box-shadow: 0 8px 25px @glow-primary;
+        }
+      }
+    }
+  }
+
+  // 主要内容区
+  .main {
+    position   : relative;
+    z-index    : 10;
+    min-height : calc(100vh - 160px);
+    padding-top: 80px;
+  }
+
+  // 页脚
+  .footer {
+    position  : relative;
+    z-index   : 10;
+    background: @bg-secondary;
+    border-top: 1px solid @border-color;
+    padding   : 60px 0 40px;
+
+    .footerContent {
+      max-width      : 1400px;
+      margin         : 0 auto;
+      padding        : 0 40px;
+      display        : flex;
+      justify-content: space-between;
+      align-items    : flex-start;
+    }
+
+    .footerLeft {
+      .logo {
+        display      : flex;
+        align-items  : center;
+        gap          : 12px;
+        font-size    : 1.25rem;
+        font-weight  : 700;
+        margin-bottom: 16px;
+
+        .logoIcon {
+          font-size: 1.5rem;
+          filter   : drop-shadow(0 0 8px @glow-primary);
+        }
+
+        .logoText {
+          background             : @accent-gradient;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip        : text;
+        }
+      }
+
+      p {
+        color : @text-muted;
+        margin: 0;
+      }
+    }
+
+    .footerRight {
+      text-align: right;
+
+      .footerLinks {
+        display      : flex;
+        gap          : 32px;
+        margin-bottom: 16px;
+
+        a {
+          color          : @text-secondary;
+          text-decoration: none;
+          transition     : color 0.3s ease;
+
+          &:hover {
+            color: @accent-primary;
+          }
+        }
+      }
+
+      .copyright {
+        color    : @text-muted;
+        font-size: 0.875rem;
+        margin   : 0;
+      }
+    }
+  }
+}
+
+// 导航样式
+.navWrap {
+  display : flex;
+  gap     : 40px;
+  position: relative;
+}
+
+.navActive,
+.navNormal {
+  cursor         : pointer;
+  font-size      : 16px;
+  color          : @text-secondary;
+  position       : relative;
+  transition     : all 0.3s ease;
+  padding        : 8px 0;
+  text-decoration: none;
+
+  &:hover {
+    color: @accent-primary;
+  }
+}
+
+.navActive {
+  color: @accent-primary;
+
+  &::after {
+    content      : '';
+    position     : absolute;
+    bottom       : -2px;
+    left         : 0;
+    right        : 0;
+    height       : 2px;
+    background   : @accent-gradient;
+    border-radius: 1px;
+  }
+}
+
+.activeLine {
+  transition   : all 0.3s ease;
+  position     : absolute;
+  bottom       : -2px;
+  height       : 2px;
+  background   : @accent-gradient;
+  border-radius: 1px;
+}
+
+// 动画效果
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity  : 0.6;
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity  : 1;
+  }
+}
+
+// 响应式设计
+@media (max-width: 1200px) {
+  .container {
+    .header .headerContent {
+      padding: 0 20px;
+    }
+
+    .footer .footerContent {
+      padding       : 0 20px;
+      flex-direction: column;
+      gap           : 40px;
+      text-align    : center;
+    }
+
+    .footer .footerRight {
+      text-align: center;
+    }
+
+    .navWrap {
+      gap: 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    .header {
+      .headerContent {
+        padding: 0 16px;
+      }
+
+      .headerActions {
+
+        .loginBtn,
+        .signupBtn {
+          padding  : 6px 16px;
+          font-size: 0.875rem;
+        }
+      }
+    }
+
+    .footer {
+      .footerContent {
+        padding: 0 16px;
+      }
+
+      .footerRight .footerLinks {
+        flex-direction: column;
+        gap           : 16px;
+      }
+    }
+
+    .navWrap {
+      gap      : 16px;
+      flex-wrap: wrap;
+    }
+
+    .navActive,
+    .navNormal {
+      font-size: 14px;
+    }
+  }
+}
 
 .body {
   background-color: #fff;

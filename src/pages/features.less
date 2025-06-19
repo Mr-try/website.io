@@ -1,0 +1,142 @@
+@import '../layouts/index.less';
+
+.container {
+  max-width: 1400px;
+  margin   : 0 auto;
+  padding  : 40px;
+
+  .header {
+    text-align   : center;
+    margin-bottom: 80px;
+
+    .title {
+      font-size              : 3rem;
+      font-weight            : 700;
+      background             : @accent-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip        : text;
+      margin-bottom          : 24px;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color    : @text-secondary;
+    }
+  }
+
+  .featuresGrid {
+    display              : grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap                  : 40px;
+
+    .featureCard {
+      background   : linear-gradient(145deg, @bg-secondary, @bg-tertiary);
+      border       : 1px solid @border-color;
+      border-radius: 20px;
+      padding      : 40px;
+      transition   : all 0.3s ease;
+      position     : relative;
+      overflow     : hidden;
+
+      &::before {
+        content   : '';
+        position  : absolute;
+        top       : 0;
+        left      : 0;
+        right     : 0;
+        bottom    : 0;
+        background: linear-gradient(45deg, transparent, @glow-secondary, transparent);
+        opacity   : 0;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover {
+        transform   : translateY(-8px);
+        border-color: @accent-primary;
+        box-shadow  : 0 20px 40px rgba(0, 0, 0, 0.3);
+
+        &::before {
+          opacity: 1;
+        }
+
+        .featureIcon {
+          transform: scale(1.1);
+          filter   : drop-shadow(0 0 20px @glow-primary);
+        }
+      }
+
+      .featureIcon {
+        font-size    : 3rem;
+        margin-bottom: 24px;
+        transition   : all 0.3s ease;
+        position     : relative;
+        z-index      : 1;
+      }
+
+      .featureTitle {
+        font-size    : 1.5rem;
+        font-weight  : 600;
+        color        : @text-primary;
+        margin-bottom: 16px;
+        position     : relative;
+        z-index      : 1;
+      }
+
+      .featureDescription {
+        color        : @text-secondary;
+        line-height  : 1.6;
+        margin-bottom: 24px;
+        position     : relative;
+        z-index      : 1;
+      }
+
+      .featureDetails {
+        list-style: none;
+        padding   : 0;
+        margin    : 0;
+        position  : relative;
+        z-index   : 1;
+
+        li {
+          color        : @text-secondary;
+          padding      : 8px 0;
+          border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+          position     : relative;
+          padding-left : 20px;
+
+          &::before {
+            content    : '✓';
+            position   : absolute;
+            left       : 0;
+            color      : @accent-primary;
+            font-weight: bold;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+
+    .header .title {
+      font-size: 2rem;
+    }
+
+    .featuresGrid {
+      grid-template-columns: 1fr;
+      gap                  : 24px;
+
+      .featureCard {
+        padding: 32px 24px;
+      }
+    }
+  }
+}

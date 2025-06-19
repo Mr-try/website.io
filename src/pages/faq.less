@@ -1,0 +1,113 @@
+@import '../layouts/index.less';
+
+.container {
+  max-width: 800px;
+  margin   : 0 auto;
+  padding  : 40px;
+
+  .header {
+    text-align   : center;
+    margin-bottom: 80px;
+
+    .title {
+      font-size              : 3rem;
+      font-weight            : 700;
+      background             : @accent-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip        : text;
+      margin-bottom          : 24px;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color    : @text-secondary;
+    }
+  }
+
+  .faqList {
+    .faqItem {
+      background   : linear-gradient(145deg, @bg-secondary, @bg-tertiary);
+      border       : 1px solid @border-color;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow     : hidden;
+      transition   : all 0.3s ease;
+
+      &:hover {
+        border-color: @accent-primary;
+        box-shadow  : 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      &.active {
+        border-color: @accent-primary;
+        box-shadow  : 0 0 30px @glow-secondary;
+      }
+
+      .question {
+        padding        : 24px;
+        cursor         : pointer;
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+        user-select    : none;
+
+        h3 {
+          color      : @text-primary;
+          font-size  : 1.125rem;
+          font-weight: 600;
+          margin     : 0;
+          flex       : 1;
+        }
+
+        .toggle {
+          font-size  : 1.5rem;
+          color      : @accent-primary;
+          font-weight: bold;
+          min-width  : 24px;
+          text-align : center;
+          transition : transform 0.3s ease;
+        }
+
+        &:hover .toggle {
+          transform: scale(1.2);
+        }
+      }
+
+      .answer {
+        max-height: 0;
+        overflow  : hidden;
+        transition: max-height 0.3s ease;
+
+        p {
+          padding    : 0 24px 24px;
+          margin     : 0;
+          color      : @text-secondary;
+          line-height: 1.6;
+        }
+      }
+
+      &.active .answer {
+        max-height: 200px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+
+    .header .title {
+      font-size: 2rem;
+    }
+
+    .faqList .faqItem .question {
+      padding: 20px;
+
+      h3 {
+        font-size: 1rem;
+      }
+    }
+  }
+}

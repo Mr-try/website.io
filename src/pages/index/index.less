@@ -1,0 +1,557 @@
+// 继承全局变量
+@import '../../layouts/index.less';
+
+.container {
+  .hero {
+    min-height : 100vh;
+    display    : flex;
+    align-items: center;
+    padding    : 0 40px;
+    max-width  : 1400px;
+    margin     : 0 auto;
+    gap        : 80px;
+
+    .heroContent {
+      flex     : 1;
+      max-width: 600px;
+
+      .badge {
+        display      : inline-block;
+        background   : linear-gradient(45deg, @accent-primary, @accent-secondary);
+        color        : @bg-primary;
+        padding      : 8px 20px;
+        border-radius: 25px;
+        font-size    : 14px;
+        font-weight  : 600;
+        margin-bottom: 32px;
+        box-shadow   : 0 4px 15px @glow-secondary;
+      }
+
+      .heroTitle {
+        font-size    : 4.5rem;
+        font-weight  : 800;
+        margin-bottom: 24px;
+        line-height  : 1.1;
+
+        .brandName {
+          background             : @accent-gradient;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip        : text;
+          filter                 : drop-shadow(0 0 20px @glow-primary);
+        }
+      }
+
+      .heroSubtitle {
+        font-size    : 1.5rem;
+        color        : @text-secondary;
+        margin-bottom: 32px;
+        line-height  : 1.6;
+        min-height   : 3rem;
+
+        .cursor {
+          color    : @accent-primary;
+          animation: blink 1s infinite;
+        }
+      }
+
+      .tags {
+        display      : flex;
+        gap          : 12px;
+        margin-bottom: 40px;
+        flex-wrap    : wrap;
+
+        .tag {
+          background   : rgba(255, 215, 0, 0.1);
+          color        : @accent-primary;
+          padding      : 6px 16px;
+          border-radius: 20px;
+          font-size    : 14px;
+          border       : 1px solid rgba(255, 215, 0, 0.3);
+        }
+      }
+
+      .heroActions {
+        display: flex;
+        gap    : 20px;
+
+        .primaryButton {
+          padding      : 16px 40px;
+          background   : @accent-gradient;
+          color        : @bg-primary;
+          border       : none;
+          border-radius: 12px;
+          font-size    : 16px;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            transform : translateY(-3px);
+            box-shadow: 0 15px 35px @glow-primary;
+          }
+        }
+
+        .secondaryButton {
+          padding      : 16px 40px;
+          background   : transparent;
+          color        : @text-primary;
+          border       : 2px solid @border-color;
+          border-radius: 12px;
+          font-size    : 16px;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            border-color: @accent-primary;
+            color       : @accent-primary;
+            box-shadow  : 0 0 25px @glow-secondary;
+          }
+        }
+      }
+    }
+
+    .heroVisual {
+      flex           : 1;
+      display        : flex;
+      justify-content: center;
+      align-items    : center;
+
+      .phoneContainer {
+        perspective: 1000px;
+
+        .phone {
+          width        : 300px;
+          height       : 600px;
+          background   : linear-gradient(145deg, #2a2a2a, #1a1a1a);
+          border-radius: 40px;
+          padding      : 8px;
+          box-shadow   :
+            0 25px 50px rgba(0, 0, 0, 0.5),
+            0 0 50px @glow-secondary;
+          transform : rotateY(-10deg) rotateX(5deg);
+          transition: transform 0.3s ease;
+
+          &:hover {
+            transform: rotateY(-5deg) rotateX(2deg) scale(1.02);
+          }
+
+          .screen {
+            width        : 100%;
+            height       : 100%;
+            background   : @bg-tertiary;
+            border-radius: 32px;
+            overflow     : hidden;
+            position     : relative;
+
+            .statusBar {
+              height    : 44px;
+              background: @accent-gradient;
+            }
+
+            .appInterface {
+              padding: 24px 20px;
+              color  : @text-primary;
+
+              .greeting {
+                margin-bottom: 24px;
+
+                h3 {
+                  font-size    : 18px;
+                  margin-bottom: 4px;
+                  color        : @text-primary;
+                }
+
+                p {
+                  font-size: 14px;
+                  color    : @text-secondary;
+                  margin   : 0;
+                }
+              }
+
+              .progressSection {
+                margin-bottom: 24px;
+
+                h4 {
+                  font-size    : 16px;
+                  color        : @text-primary;
+                  margin-bottom: 16px;
+                }
+
+                .habitItem {
+                  display      : flex;
+                  align-items  : center;
+                  gap          : 12px;
+                  margin-bottom: 12px;
+                  font-size    : 12px;
+
+                  span:first-child {
+                    min-width: 80px;
+                    font-size: 11px;
+                  }
+
+                  .progressBar {
+                    flex         : 1;
+                    height       : 6px;
+                    background   : #333;
+                    border-radius: 3px;
+                    overflow     : hidden;
+
+                    .progress {
+                      height       : 100%;
+                      background   : @accent-gradient;
+                      border-radius: 3px;
+                      transition   : width 0.5s ease;
+                    }
+                  }
+
+                  span:last-child {
+                    min-width: 30px;
+                    font-size: 11px;
+                    color    : @text-secondary;
+                  }
+                }
+              }
+
+              .aiInsight {
+                background   : rgba(255, 215, 0, 0.05);
+                border       : 1px solid rgba(255, 215, 0, 0.2);
+                border-radius: 12px;
+                padding      : 16px;
+                display      : flex;
+                gap          : 12px;
+
+                .aiIcon {
+                  font-size: 20px;
+                  filter   : drop-shadow(0 0 5px @glow-primary);
+                }
+
+                h5 {
+                  font-size: 14px;
+                  color    : @accent-primary;
+                  margin   : 0 0 4px 0;
+                }
+
+                p {
+                  font-size  : 12px;
+                  color      : @text-secondary;
+                  margin     : 0;
+                  line-height: 1.4;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .features {
+    padding  : 120px 40px;
+    max-width: 1400px;
+    margin   : 0 auto;
+
+    .sectionHeader {
+      text-align   : center;
+      margin-bottom: 80px;
+
+      h2 {
+        font-size    : 3rem;
+        font-weight  : 700;
+        color        : @text-primary;
+        margin-bottom: 16px;
+      }
+
+      p {
+        font-size: 1.25rem;
+        color    : @text-secondary;
+      }
+    }
+
+    .featuresGrid {
+      display              : grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap                  : 40px;
+
+      .featureCard {
+        background   : linear-gradient(145deg, @bg-secondary, @bg-tertiary);
+        border       : 1px solid @border-color;
+        border-radius: 20px;
+        padding      : 40px;
+        text-align   : center;
+        transition   : all 0.3s ease;
+        position     : relative;
+        overflow     : hidden;
+
+        &::before {
+          content   : '';
+          position  : absolute;
+          top       : 0;
+          left      : 0;
+          right     : 0;
+          bottom    : 0;
+          background: linear-gradient(45deg, transparent, @glow-secondary, transparent);
+          opacity   : 0;
+          transition: opacity 0.3s ease;
+        }
+
+        &:hover {
+          transform   : translateY(-8px);
+          border-color: @accent-primary;
+          box-shadow  : 0 20px 40px rgba(0, 0, 0, 0.3);
+
+          &::before {
+            opacity: 1;
+          }
+
+          .featureIcon {
+            transform: scale(1.1);
+            filter   : drop-shadow(0 0 20px @glow-primary);
+          }
+        }
+
+        .featureIcon {
+          font-size    : 3rem;
+          margin-bottom: 24px;
+          transition   : all 0.3s ease;
+          position     : relative;
+          z-index      : 1;
+        }
+
+        h3 {
+          font-size    : 1.5rem;
+          font-weight  : 600;
+          color        : @text-primary;
+          margin-bottom: 16px;
+          position     : relative;
+          z-index      : 1;
+        }
+
+        p {
+          color      : @text-secondary;
+          line-height: 1.6;
+          position   : relative;
+          z-index    : 1;
+        }
+      }
+    }
+  }
+
+  .stats {
+    padding      : 80px 40px;
+    background   : @bg-secondary;
+    border-top   : 1px solid @border-color;
+    border-bottom: 1px solid @border-color;
+
+    .statsGrid {
+      display              : grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap                  : 40px;
+      max-width            : 1400px;
+      margin               : 0 auto;
+
+      .statItem {
+        text-align: center;
+
+        .statNumber {
+          font-size              : 3.5rem;
+          font-weight            : 800;
+          background             : @accent-gradient;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip        : text;
+          margin-bottom          : 8px;
+          filter                 : drop-shadow(0 0 10px @glow-primary);
+        }
+
+        .statLabel {
+          color    : @text-secondary;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding   : 120px 40px;
+    text-align: center;
+    max-width : 1400px;
+    margin    : 0 auto;
+
+    .ctaContent {
+      h2 {
+        font-size    : 3rem;
+        font-weight  : 700;
+        color        : @text-primary;
+        margin-bottom: 24px;
+        line-height  : 1.2;
+      }
+
+      p {
+        font-size    : 1.25rem;
+        color        : @text-secondary;
+        margin-bottom: 40px;
+      }
+
+      .ctaButton {
+        padding      : 20px 50px;
+        background   : @accent-gradient;
+        color        : @bg-primary;
+        border       : none;
+        border-radius: 15px;
+        font-size    : 18px;
+        font-weight  : 600;
+        cursor       : pointer;
+        transition   : all 0.3s ease;
+        position     : relative;
+        overflow     : hidden;
+
+        &::before {
+          content   : '';
+          position  : absolute;
+          top       : 0;
+          left      : -100%;
+          width     : 100%;
+          height    : 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          transition: left 0.5s ease;
+        }
+
+        &:hover {
+          transform : translateY(-3px) scale(1.05);
+          box-shadow: 0 20px 40px @glow-primary;
+
+          &::before {
+            left: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+// 响应式设计
+@media (max-width: 1200px) {
+  .container {
+    .hero {
+      flex-direction: column;
+      padding       : 60px 20px;
+      gap           : 60px;
+      text-align    : center;
+
+      .heroContent {
+        max-width: none;
+      }
+    }
+
+    .features {
+      padding: 80px 20px;
+
+      .featuresGrid {
+        grid-template-columns: 1fr;
+        gap                  : 32px;
+      }
+    }
+
+    .stats {
+      padding: 60px 20px;
+
+      .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap                  : 32px;
+      }
+    }
+
+    .cta {
+      padding: 80px 20px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    .hero {
+      padding: 40px 16px;
+
+      .heroContent {
+        .heroTitle {
+          font-size: 3rem;
+        }
+
+        .heroActions {
+          flex-direction: column;
+
+          .primaryButton,
+          .secondaryButton {
+            width: 100%;
+          }
+        }
+      }
+
+      .heroVisual .phoneContainer .phone {
+        width    : 250px;
+        height   : 500px;
+        transform: none;
+
+        &:hover {
+          transform: scale(1.02);
+        }
+      }
+    }
+
+    .features {
+      padding: 60px 16px;
+
+      .sectionHeader h2 {
+        font-size: 2rem;
+      }
+
+      .featuresGrid .featureCard {
+        padding: 32px 24px;
+      }
+    }
+
+    .stats {
+      padding: 50px 16px;
+
+      .statsGrid {
+        grid-template-columns: 1fr;
+        gap                  : 24px;
+
+        .statItem .statNumber {
+          font-size: 2.5rem;
+        }
+      }
+    }
+
+    .cta {
+      padding: 60px 16px;
+
+      .ctaContent {
+        h2 {
+          font-size: 2rem;
+        }
+
+        .ctaButton {
+          width  : 100%;
+          padding: 18px 40px;
+        }
+      }
+    }
+  }
+}

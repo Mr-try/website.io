@@ -1,0 +1,559 @@
+@primary-color     : #6366f1;
+@secondary-color   : #8b5cf6;
+@accent-color      : #10b981;
+@text-primary      : #1f2937;
+@text-secondary    : #6b7280;
+@text-light        : #9ca3af;
+@bg-gray           : #f9fafb;
+@bg-light          : #ffffff;
+@border-color      : #e5e7eb;
+@gradient-primary  : linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+@gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+.container {
+  min-height: 100vh;
+  background: @bg-light;
+
+  // Hero Section
+  .hero {
+    padding    : 80px 0 120px;
+    background : linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    display    : flex;
+    align-items: center;
+    min-height : 80vh;
+
+    .heroContent {
+      flex         : 1;
+      max-width    : 600px;
+      padding-right: 60px;
+
+      .heroTitle {
+        font-size    : 4rem;
+        font-weight  : 700;
+        line-height  : 1.1;
+        color        : @text-primary;
+        margin-bottom: 24px;
+
+        .highlight {
+          background             : @gradient-primary;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip        : text;
+        }
+      }
+
+      .heroSubtitle {
+        font-size    : 1.25rem;
+        color        : @text-secondary;
+        line-height  : 1.6;
+        margin-bottom: 40px;
+      }
+
+      .heroButtons {
+        display: flex;
+        gap    : 16px;
+
+        .primaryButton {
+          padding      : 16px 32px;
+          background   : @gradient-primary;
+          color        : white;
+          border       : none;
+          border-radius: 12px;
+          font-size    : 1rem;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            transform : translateY(-2px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
+          }
+        }
+
+        .secondaryButton {
+          padding      : 16px 32px;
+          background   : transparent;
+          color        : @text-primary;
+          border       : 2px solid @border-color;
+          border-radius: 12px;
+          font-size    : 1rem;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            border-color: @primary-color;
+            color       : @primary-color;
+          }
+        }
+      }
+    }
+
+    .heroVisual {
+      flex           : 1;
+      display        : flex;
+      justify-content: center;
+      align-items    : center;
+
+      .phonePreview {
+        width        : 300px;
+        height       : 600px;
+        background   : linear-gradient(135deg, #1f2937 0%, #374151 100%);
+        border-radius: 40px;
+        padding      : 8px;
+        box-shadow   : 0 25px 50px rgba(0, 0, 0, 0.25);
+
+        .screen {
+          width        : 100%;
+          height       : 100%;
+          background   : white;
+          border-radius: 32px;
+          overflow     : hidden;
+
+          .statusBar {
+            height    : 44px;
+            background: @gradient-primary;
+          }
+
+          .appContent {
+            padding: 24px 20px;
+
+            .greeting {
+              font-size    : 1.1rem;
+              font-weight  : 600;
+              color        : @text-primary;
+              margin-bottom: 24px;
+            }
+
+            .habitCard {
+              background   : @bg-gray;
+              border-radius: 16px;
+              padding      : 20px;
+
+              .habitTitle {
+                font-weight  : 600;
+                color        : @text-primary;
+                margin-bottom: 16px;
+              }
+
+              .progressItem {
+                margin-bottom: 12px;
+
+                span {
+                  font-size    : 0.9rem;
+                  margin-bottom: 8px;
+                  display      : block;
+                }
+
+                .progressBar {
+                  height       : 8px;
+                  background   : #e5e7eb;
+                  border-radius: 4px;
+                  overflow     : hidden;
+
+                  .progressFill {
+                    height       : 100%;
+                    background   : @gradient-secondary;
+                    border-radius: 4px;
+                    transition   : width 0.3s ease;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Features Section
+  .features {
+    padding   : 120px 0;
+    background: @bg-light;
+
+    .sectionHeader {
+      text-align   : center;
+      margin-bottom: 80px;
+
+      .sectionTitle {
+        font-size    : 2.5rem;
+        font-weight  : 700;
+        color        : @text-primary;
+        margin-bottom: 16px;
+      }
+
+      .sectionSubtitle {
+        font-size: 1.125rem;
+        color    : @text-secondary;
+        max-width: 600px;
+        margin   : 0 auto;
+      }
+    }
+
+    .featuresGrid {
+      display              : grid;
+      grid-template-columns: 1fr 1fr;
+      gap                  : 80px;
+      align-items          : center;
+
+      .featuresList {
+        .featureItem {
+          display      : flex;
+          align-items  : center;
+          padding      : 24px;
+          border-radius: 16px;
+          margin-bottom: 16px;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+          border       : 2px solid transparent;
+
+          &:hover,
+          &.active {
+            background  : @bg-gray;
+            border-color: @primary-color;
+            transform   : translateX(8px);
+          }
+
+          .featureIcon {
+            font-size   : 2rem;
+            margin-right: 20px;
+            min-width   : 60px;
+            text-align  : center;
+          }
+
+          .featureContent {
+            h3 {
+              font-size    : 1.25rem;
+              font-weight  : 600;
+              color        : @text-primary;
+              margin-bottom: 8px;
+            }
+
+            p {
+              color      : @text-secondary;
+              line-height: 1.5;
+            }
+          }
+        }
+      }
+
+      .featureDetail {
+        .featureDetailCard {
+          background   : @gradient-primary;
+          color        : white;
+          padding      : 40px;
+          border-radius: 24px;
+          text-align   : center;
+          box-shadow   : 0 20px 40px rgba(99, 102, 241, 0.3);
+
+          .featureDetailIcon {
+            font-size    : 4rem;
+            margin-bottom: 24px;
+          }
+
+          h3 {
+            font-size    : 1.5rem;
+            font-weight  : 600;
+            margin-bottom: 16px;
+          }
+
+          p {
+            line-height: 1.6;
+            opacity    : 0.9;
+          }
+        }
+      }
+    }
+  }
+
+  // Stats Section
+  .stats {
+    padding   : 80px 0;
+    background: @bg-gray;
+
+    .statsGrid {
+      display              : grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap                  : 40px;
+
+      .statItem {
+        text-align: center;
+
+        .statNumber {
+          font-size    : 3rem;
+          font-weight  : 700;
+          color        : @primary-color;
+          margin-bottom: 8px;
+        }
+
+        .statLabel {
+          color    : @text-secondary;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  // Testimonials Section
+  .testimonials {
+    padding   : 120px 0;
+    background: @bg-light;
+
+    .sectionHeader {
+      text-align   : center;
+      margin-bottom: 80px;
+
+      .sectionTitle {
+        font-size    : 2.5rem;
+        font-weight  : 700;
+        color        : @text-primary;
+        margin-bottom: 16px;
+      }
+
+      .sectionSubtitle {
+        font-size: 1.125rem;
+        color    : @text-secondary;
+      }
+    }
+
+    .testimonialsGrid {
+      display              : grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap                  : 32px;
+
+      .testimonialCard {
+        background   : @bg-light;
+        border       : 1px solid @border-color;
+        border-radius: 16px;
+        padding      : 32px;
+        transition   : all 0.3s ease;
+
+        &:hover {
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+          transform : translateY(-4px);
+        }
+
+        .testimonialContent {
+          color        : @text-primary;
+          line-height  : 1.6;
+          margin-bottom: 24px;
+          font-style   : italic;
+        }
+
+        .testimonialAuthor {
+          display    : flex;
+          align-items: center;
+
+          .authorAvatar {
+            font-size   : 2rem;
+            margin-right: 16px;
+          }
+
+          .authorInfo {
+            .authorName {
+              font-weight  : 600;
+              color        : @text-primary;
+              margin-bottom: 4px;
+            }
+
+            .authorRole {
+              color    : @text-secondary;
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // CTA Section
+  .cta {
+    padding   : 120px 0;
+    background: @gradient-primary;
+    text-align: center;
+
+    .ctaContent {
+      color: white;
+
+      h2 {
+        font-size    : 2.5rem;
+        font-weight  : 700;
+        margin-bottom: 16px;
+      }
+
+      p {
+        font-size    : 1.125rem;
+        opacity      : 0.9;
+        margin-bottom: 40px;
+      }
+
+      .ctaButtons {
+        display        : flex;
+        gap            : 16px;
+        justify-content: center;
+
+        .primaryButton {
+          padding      : 16px 32px;
+          background   : white;
+          color        : @primary-color;
+          border       : none;
+          border-radius: 12px;
+          font-size    : 1rem;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            transform : translateY(-2px);
+            box-shadow: 0 12px 24px rgba(255, 255, 255, 0.3);
+          }
+        }
+
+        .secondaryButton {
+          padding      : 16px 32px;
+          background   : transparent;
+          color        : white;
+          border       : 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: 12px;
+          font-size    : 1rem;
+          font-weight  : 600;
+          cursor       : pointer;
+          transition   : all 0.3s ease;
+
+          &:hover {
+            border-color: white;
+            background  : rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+    }
+  }
+
+  // Footer
+  .footer {
+    background: @text-primary;
+    color     : white;
+    padding   : 80px 0 40px;
+
+    .footerContent {
+      display              : grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap                  : 40px;
+      margin-bottom        : 40px;
+
+      .footerSection {
+        h4 {
+          font-weight  : 600;
+          margin-bottom: 20px;
+          color        : white;
+        }
+
+        ul {
+          list-style: none;
+          padding   : 0;
+
+          li {
+            margin-bottom: 12px;
+            color        : #d1d5db;
+            cursor       : pointer;
+            transition   : color 0.3s ease;
+
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+
+    .footerBottom {
+      border-top : 1px solid #374151;
+      padding-top: 40px;
+      text-align : center;
+
+      p {
+        color : #9ca3af;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1200px) {
+  .container {
+    .hero {
+      flex-direction: column;
+      text-align    : center;
+
+      .heroContent {
+        padding-right: 0;
+        margin-bottom: 60px;
+      }
+    }
+
+    .features .featuresGrid {
+      grid-template-columns: 1fr;
+      gap                  : 60px;
+    }
+
+    .stats .statsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonials .testimonialsGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer .footerContent {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    .hero {
+      padding: 60px 20px;
+
+      .heroContent {
+        .heroTitle {
+          font-size: 2.5rem;
+        }
+
+        .heroButtons {
+          flex-direction: column;
+
+          .primaryButton,
+          .secondaryButton {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .features,
+    .testimonials,
+    .cta {
+      padding: 80px 20px;
+    }
+
+    .stats {
+      padding: 60px 20px;
+
+      .statsGrid {
+        grid-template-columns: 1fr;
+        gap                  : 32px;
+      }
+    }
+
+    .footer {
+      padding: 60px 20px 40px;
+
+      .footerContent {
+        grid-template-columns: 1fr;
+        gap                  : 32px;
+      }
+    }
+  }
+}

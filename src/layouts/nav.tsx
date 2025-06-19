@@ -10,8 +10,11 @@ import { useLocation } from 'react-router';
 import { goto } from '@/utils';
 import { useEffect, useState } from 'react';
 const NAVS = [
-  { title: '文章', link: '/' },
-  { title: '我', link: '/me' },
+  { title: '首页', link: '/' },
+  { title: '下载', link: '/download' },
+  { title: '特点', link: '/features' },
+  { title: '常见问题', link: '/faq' },
+  { title: '关于我们', link: '/about' },
 ];
 export default function Layout() {
   const { pathname } = useLocation();
