@@ -28,7 +28,7 @@ export default function Layout({ onItemClick }: NavProps) {
   
   // 根据当前路径初始化index
   useEffect(() => {
-    const currentIndex = NAVS.findIndex(nav => nav.link === pathname);
+    const currentIndex = NAVS.findIndex(nav => nav.link === pathname || `${nav.link}/` === pathname);
     if (currentIndex !== -1) {
       setIndex(currentIndex);
     }
@@ -48,7 +48,7 @@ export default function Layout({ onItemClick }: NavProps) {
       {NAVS.map((nav, j) => (
         <div
           className={`${
-            pathname === nav.link ? styles.navActive : styles.navNormal
+            (pathname === nav.link || `${nav.link}/` === pathname) ? styles.navActive : styles.navNormal
           } navCell`}
           key={nav.title}
           onClick={() => {
