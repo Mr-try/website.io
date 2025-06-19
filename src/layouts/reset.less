@@ -8,7 +8,7 @@ html {
   margin          : 0;
   padding         : 0;
   scroll-behavior : smooth;
-  background-color: #F5F6F9;
+  background-color: #0a0a0a;
 }
 
 p {
@@ -28,26 +28,32 @@ a {
 }
 
 ::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width : 8px;
-  /*高宽分别对应横竖滚动条的尺寸*/
-  height: 10px;
+  width : 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius: 8px;
-  background   : #e6e6eb;
-}
+  border-radius: 3px;
+  background   : linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  transition   : all 0.3s ease;
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #c5c6d2;
+  &:hover {
+    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  }
+
+  &:active {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+  }
 }
 
 ::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  border-radius: 8px;
-  background   : rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  background   : rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 // 单行溢出裁切
@@ -230,4 +236,10 @@ li {
   .ant-popover-inner-content {
     padding: 0;
   }
+}
+
+// Firefox 滚动条样式
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ffd700 rgba(255, 255, 255, 0.05);
 }

@@ -7,3 +7,4 @@
 import Flex from './Flex'
 import Article from './Article'
 export { Flex, Article }
+export { default as MouseGlow } from './MouseGlow';
