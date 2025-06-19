@@ -38,17 +38,26 @@
   position   : relative;
   overflow-x : hidden;
 
-  // 光影特效
-  .glowEffect {
+  // Canvas鼠标光线跟踪效果
+  .mouseTrailCanvas {
     position      : fixed;
-    width         : 600px;
-    height        : 600px;
-    background    : radial-gradient(circle, @glow-primary 0%, transparent 70%);
-    border-radius : 50%;
+    top           : 0;
+    left          : 0;
+    width         : 100%;
+    height        : 100%;
     pointer-events: none;
-    z-index       : 1;
-    transition    : all 0.3s ease;
-    filter        : blur(40px);
+    z-index       : 50;
+    mix-blend-mode: screen; // 让光线效果更亮
+
+    // 移动端隐藏光线跟踪以提升性能
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    // 触摸设备隐藏（因为没有鼠标移动）
+    @media (hover: none) {
+      display: none;
+    }
   }
 
   // 粒子背景
@@ -59,7 +68,7 @@
     width         : 100%;
     height        : 100%;
     pointer-events: none;
-    z-index       : 1;
+    z-index       : 50;
 
     .particle {
       position     : absolute;
@@ -79,13 +88,15 @@
 
   // 顶部导航
   .header {
-    position       : fixed;
-    top            : 0;
-    left           : 0;
-    right          : 0;
-    z-index        : 100;
-    backdrop-filter: blur(20px);
-    border-bottom  : 1px solid @border-color;
+    position               : fixed;
+    top                    : 0;
+    left                   : 0;
+    right                  : 0;
+    z-index                : 100;
+    backdrop-filter        : blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom          : 1px solid @border-color;
+    transition             : all 0.3s ease;
 
     .headerContent {
       max-width      : 1400px;
@@ -119,38 +130,183 @@
 
     .headerActions {
       display: flex;
-      gap    : 16px;
+      gap    : 1rem; // 16px / 16
 
       .loginBtn {
-        padding      : 8px 24px;
+        padding      : 0.5rem 1.5rem; // 8px 24px / 16
         background   : transparent;
         color        : @text-secondary;
         border       : 1px solid @border-color;
-        border-radius: 8px;
+        border-radius: 0.5rem; // 8px / 16
         cursor       : pointer;
         transition   : all 0.3s ease;
+        font-size    : 0.875rem; // 14px / 16
 
         &:hover {
           color       : @text-primary;
           border-color: @accent-primary;
-          box-shadow  : 0 0 20px @glow-secondary;
+          box-shadow  : 0 0 1.25rem @glow-secondary; // 20px / 16
         }
       }
 
       .signupBtn {
-        padding      : 8px 24px;
+        padding      : 0.5rem 1.5rem; // 8px 24px / 16
         background   : @accent-gradient;
         color        : @bg-primary;
         border       : none;
-        border-radius: 8px;
+        border-radius: 0.5rem; // 8px / 16
         font-weight  : 600;
         cursor       : pointer;
         transition   : all 0.3s ease;
+        font-size    : 0.875rem; // 14px / 16
 
         &:hover {
-          transform : translateY(-2px);
-          box-shadow: 0 8px 25px @glow-primary;
+          transform : translateY(-0.125rem); // -2px / 16
+          box-shadow: 0 0.5rem 1.5625rem @glow-primary; // 0 8px 25px / 16
         }
+      }
+    }
+  }
+
+  .glassHeader {
+    background: rgba(10, 10, 10, var(--header-bg-opacity, 0.1));
+
+    // 增强毛玻璃效果
+    &::before {
+      content : '';
+      position: absolute;
+      top     : 0;
+      left    : 0;
+      right   : 0;
+      bottom  : 0;
+      background: linear-gradient(135deg,
+          rgba(255, 215, 0, 0.05) 0%,
+          rgba(255, 215, 0, 0.02) 50%,
+          rgba(255, 215, 0, 0.05) 100%);
+      pointer-events: none;
+      z-index       : -1;
+    }
+
+    // 为不支持backdrop-filter的浏览器提供fallback
+    @supports not (backdrop-filter: blur(20px)) {
+      background: rgba(10, 10, 10, 0.85);
+
+      &::before {
+        background: linear-gradient(135deg,
+            rgba(255, 215, 0, 0.1) 0%,
+            rgba(255, 215, 0, 0.05) 50%,
+            rgba(255, 215, 0, 0.1) 100%);
+      }
+    }
+  }
+
+  // 移动端菜单按钮
+  .mobileMenuBtn {
+    display      : none;
+    background   : transparent;
+    border       : none;
+    cursor       : pointer;
+    padding      : 0.5rem; // 8px / 16
+    border-radius: 0.25rem; // 4px / 16
+    transition   : all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.1);
+    }
+  }
+
+  // 汉堡菜单图标
+  .hamburger {
+    width     : 1.5rem; // 24px / 16
+    height    : 1.125rem; // 18px / 16
+    position  : relative;
+    transform : rotate(0deg);
+    transition: 0.3s ease-in-out;
+
+    span {
+      display      : block;
+      position     : absolute;
+      height       : 0.125rem; // 2px / 16
+      width        : 100%;
+      background   : @accent-primary;
+      border-radius: 0.0625rem; // 1px / 16
+      opacity      : 1;
+      left         : 0;
+      transform    : rotate(0deg);
+      transition   : 0.25s ease-in-out;
+
+      &:nth-child(1) {
+        top: 0;
+      }
+
+      &:nth-child(2) {
+        top: 0.5rem; // 8px / 16
+      }
+
+      &:nth-child(3) {
+        top: 1rem; // 16px / 16
+      }
+    }
+
+    &.active {
+      span:nth-child(1) {
+        top      : 0.5rem; // 8px / 16
+        transform: rotate(135deg);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+        left   : -3.75rem; // -60px / 16
+      }
+
+      span:nth-child(3) {
+        top      : 0.5rem; // 8px / 16
+        transform: rotate(-135deg);
+      }
+    }
+  }
+
+  // 桌面端导航
+  .desktopNav {
+    display: flex;
+  }
+
+  // 移动端菜单
+  .mobileMenu {
+    position               : absolute;
+    top                    : 100%;
+    left                   : 0;
+    right                  : 0;
+    background             : rgba(10, 10, 10, 0.95);
+    backdrop-filter        : blur(1.25rem); // 20px / 16
+    -webkit-backdrop-filter: blur(1.25rem); // 20px / 16
+    border-bottom          : 1px solid @border-color;
+    padding                : 1.25rem 2.5rem; // 20px 40px / 16
+    transform              : translateY(-100%);
+    opacity                : 0;
+    visibility             : hidden;
+    transition             : all 0.3s ease;
+
+    &.open {
+      transform : translateY(0);
+      opacity   : 1;
+      visibility: visible;
+    }
+
+    .mobileActions {
+      display        : flex;
+      gap            : 0.75rem; // 12px / 16
+      margin-top     : 1.25rem; // 20px / 16
+      padding-top    : 1.25rem; // 20px / 16
+      border-top     : 1px solid @border-color;
+      justify-content: center;
+
+      .loginBtn,
+      .signupBtn {
+        flex     : 1;
+        max-width: 7.5rem; // 120px / 16
+        padding  : 0.75rem 1rem; // 更大的移动端按钮
+        font-size: 1rem; // 16px / 16，移动端更大字体
       }
     }
   }
@@ -239,18 +395,18 @@
 // 导航样式
 .navWrap {
   display : flex;
-  gap     : 40px;
+  gap     : 2.5rem; // 40px / 16
   position: relative;
 }
 
 .navActive,
 .navNormal {
   cursor         : pointer;
-  font-size      : 16px;
+  font-size      : 1rem; // 16px / 16
   color          : @text-secondary;
   position       : relative;
   transition     : all 0.3s ease;
-  padding        : 8px 0;
+  padding        : 0.5rem 0; // 8px 0 / 16
   text-decoration: none;
 
   &:hover {
@@ -264,12 +420,12 @@
   &::after {
     content      : '';
     position     : absolute;
-    bottom       : -2px;
+    bottom       : -0.125rem; // -2px / 16
     left         : 0;
     right        : 0;
-    height       : 2px;
+    height       : 0.125rem; // 2px / 16
     background   : @accent-gradient;
-    border-radius: 1px;
+    border-radius: 0.0625rem; // 1px / 16
   }
 }
 
@@ -301,13 +457,13 @@
 @media (max-width: 1200px) {
   .container {
     .header .headerContent {
-      padding: 0 20px;
+      padding: 0 1.25rem; // 20px / 16
     }
 
     .footer .footerContent {
-      padding       : 0 20px;
+      padding       : 0 1.25rem; // 20px / 16
       flex-direction: column;
-      gap           : 40px;
+      gap           : 2.5rem; // 40px / 16
       text-align    : center;
     }
 
@@ -316,7 +472,7 @@
     }
 
     .navWrap {
-      gap: 24px;
+      gap: 1.5rem; // 24px / 16
     }
   }
 }
@@ -325,38 +481,135 @@
   .container {
     .header {
       .headerContent {
-        padding: 0 16px;
+        padding: 0 1rem; // 16px / 16
+        height : 4rem; // 移动端稍矮一些的导航栏，64px / 16
+      }
+
+      // 移动端隐藏桌面导航
+      .desktopNav {
+        display: none;
+      }
+
+      // 显示移动端菜单按钮
+      .mobileMenuBtn {
+        display: block;
       }
 
       .headerActions {
+        display: none; // 移动端隐藏顶部按钮，显示在下拉菜单中
+      }
 
-        .loginBtn,
-        .signupBtn {
-          padding  : 6px 16px;
-          font-size: 0.875rem;
+      .logo {
+        .logoIcon {
+          font-size: 1.75rem; // 移动端略小的图标，28px / 16
+        }
+
+        .logoText {
+          font-size: 1.25rem; // 移动端logo文字，20px / 16
         }
       }
     }
 
+    .mobileMenu {
+      padding: 1.5rem 1rem; // 24px 16px / 16，更大的移动端内边距
+    }
+
     .footer {
       .footerContent {
-        padding: 0 16px;
+        padding: 0 1rem; // 16px / 16
       }
 
-      .footerRight .footerLinks {
+      .footerLinks {
         flex-direction: column;
-        gap           : 16px;
+        gap           : 1rem !important; // 16px / 16
       }
     }
 
     .navWrap {
-      gap      : 16px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap           : 0.75rem; // 12px / 16，稍大的间距
+      text-align    : center;
     }
 
+    // 移动端导航项样式优化 - 更大的字体和触摸区域
     .navActive,
     .navNormal {
-      font-size: 14px;
+      padding  : 1rem 0; // 16px 0 / 16，更大的触摸区域
+      font-size: 1.125rem; // 18px / 16，更大的移动端字体
+
+      &:hover {
+        background   : rgba(255, 215, 0, 0.1);
+        border-radius: 0.5rem; // 8px / 16
+        padding-left : 1rem; // 16px / 16
+        padding-right: 1rem; // 16px / 16
+      }
+    }
+
+    // 移动端主要内容区域
+    .main {
+      padding-top: 4rem; // 64px / 16，匹配移动端导航栏高度
+    }
+  }
+}
+
+// 平板端适配
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container {
+    .header {
+      .headerContent {
+        padding: 0 1.5rem; // 24px / 16
+      }
+
+      .navWrap {
+        gap: 1.5rem; // 24px / 16
+      }
+
+      .headerActions {
+        gap: 0.75rem; // 12px / 16
+
+        .loginBtn,
+        .signupBtn {
+          padding  : 0.375rem 1.25rem; // 6px 20px / 16
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// 小屏手机特殊优化
+@media (max-width: 480px) {
+  .container {
+    .header {
+      .headerContent {
+        padding: 0 0.75rem; // 12px / 16，更紧凑的间距
+      }
+
+      .logo {
+        .logoText {
+          font-size: 1.125rem; // 18px / 16，小屏更小的logo
+        }
+      }
+    }
+
+    .mobileMenu {
+      padding: 1.25rem 0.75rem; // 20px 12px / 16
+
+      .mobileActions {
+
+        .loginBtn,
+        .signupBtn {
+          padding  : 0.875rem 0.75rem; // 14px 12px / 16，小屏更紧凑的按钮
+          font-size: 0.875rem; // 14px / 16
+        }
+      }
+    }
+
+    // 小屏导航项优化
+    .navActive,
+    .navNormal {
+      padding  : 0.875rem 0; // 14px 0 / 16
+      font-size: 1rem; // 16px / 16
     }
   }
 }

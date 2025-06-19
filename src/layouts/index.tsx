@@ -6,53 +6,184 @@
 import { Outlet } from 'umi';
 import styles from './index.less';
 import Nav from './nav';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './reset.less';
 
 export default function Layout() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
+  const pointsRef = useRef<Array<{x: number, y: number, age: number}>>([]);
+  const mouseRef = useRef({x: 0, y: 0});
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 移动端性能检测
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const maxPoints = isMobile ? 15 : 30;
+
+    // 设置canvas尺寸
+    const updateCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    updateCanvasSize();
+
+    // 鼠标跟踪点类
+    class TrailPoint {
+      constructor(public x: number, public y: number, public age: number = 0) {}
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+      
+      // 添加新的跟踪点
+      pointsRef.current.push(new TrailPoint(e.clientX, e.clientY));
+      
+      // 限制点的数量
+      if (pointsRef.current.length > maxPoints) {
+        pointsRef.current.shift();
+      }
     };
 
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
+    
+
+    const handleResize = () => {
+      updateCanvasSize();
+    };
+
+    // 帧率控制
+    let lastTime = 0;
+    const targetFPS = isMobile ? 30 : 60;
+    const frameInterval = 1000 / targetFPS;
+
+    // 动画循环
+    const animate = (currentTime: number = 0) => {
+      if (!ctx || !canvas) return;
+      
+      // 帧率控制
+      if (currentTime - lastTime < frameInterval) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastTime = currentTime;
+      
+      // 清除画布
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // 更新点的年龄并移除老旧的点
+      const maxAge = isMobile ? 20 : 30;
+      pointsRef.current = pointsRef.current.filter(point => {
+        point.age += 1;
+        return point.age < maxAge;
+      });
+
+      // 绘制多层细腻光线轨迹
+      if (pointsRef.current.length > 2) {
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        
+        // 定义多层光线效果
+        const layers = [
+          { 
+            colors: ['hsla(45, 100%, 60%, 0.6)', 'hsla(50, 100%, 70%, 0.4)', 'hsla(55, 100%, 80%, 0.2)'], 
+            widthMultiplier: 2.5, 
+            blur: 8 
+          },
+          { 
+            colors: ['hsla(45, 100%, 70%, 0.8)', 'hsla(50, 100%, 80%, 0.6)', 'hsla(55, 100%, 90%, 0.4)'], 
+            widthMultiplier: 1.5, 
+            blur: 4 
+          },
+          { 
+            colors: ['hsla(45, 100%, 80%, 0.9)', 'hsla(50, 100%, 90%, 0.7)', 'hsla(55, 100%, 95%, 0.5)'], 
+            widthMultiplier: 0.8, 
+            blur: 2 
+          },
+          { 
+            colors: ['hsla(45, 100%, 90%, 1)', 'hsla(50, 100%, 95%, 0.8)', 'hsla(55, 100%, 98%, 0.6)'], 
+            widthMultiplier: 0.3, 
+            blur: 0 
+          }
+        ];
+        
+        layers.forEach((layer) => {
+          for (let i = 2; i < pointsRef.current.length; i++) {
+            const p0 = pointsRef.current[i - 2];
+            const p1 = pointsRef.current[i - 1];
+            const p2 = pointsRef.current[i];
+            
+            const baseOpacity = (1 - p1.age / maxAge);
+            const lineWidth = baseOpacity * (isMobile ? 1.5 : 3) * layer.widthMultiplier;
+            
+            if (baseOpacity > 0.05 && lineWidth > 0.1) {
+              // 创建沿轨迹的渐变
+              const gradient = ctx.createLinearGradient(p0.x, p0.y, p2.x, p2.y);
+              
+              layer.colors.forEach((color, colorIndex) => {
+                const stop = colorIndex / (layer.colors.length - 1);
+                // 动态调整透明度
+                const opacityMatch = color.match(/[\d.]+\)$/);
+                if (opacityMatch) {
+                  const originalOpacity = parseFloat(opacityMatch[0].slice(0, -1));
+                  const adjustedColor = color.replace(/[\d.]+\)$/, `${baseOpacity * originalOpacity})`);
+                  gradient.addColorStop(stop, adjustedColor);
+                }
+              });
+              
+              ctx.strokeStyle = gradient;
+              ctx.lineWidth = lineWidth;
+              
+              // 设置阴影（外层光晕）
+              if (layer.blur > 0) {
+                const shadowOpacity = baseOpacity * 0.3;
+                const shadowColor = layer.colors[1].replace(/[\d.]+\)$/, `${shadowOpacity})`);
+                ctx.shadowColor = shadowColor;
+                ctx.shadowBlur = layer.blur;
+              } else {
+                ctx.shadowBlur = 0;
+              }
+              ctx.beginPath();
+              ctx.moveTo(p0.x, p0.y);
+              // 使用二次贝塞尔曲线创建流畅轨迹
+              const cpx = (p0.x + p2.x) / 2;
+              const cpy = (p0.y + p2.y) / 2;
+              ctx.quadraticCurveTo(p1.x, p1.y, cpx, cpy);
+              ctx.stroke();
+            }
+          }
+        });
+        // 重置阴影
+        ctx.shadowBlur = 0;
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener('resize', handleResize);
+    animate();
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, []);
 
-  // 根据滚动位置计算导航栏的透明度
-  // 0-100px: 从0.3渐变到0.95
-  const getHeaderOpacity = () => {
-    const maxScroll = 100;
-    const minOpacity = 0.3;
-    const maxOpacity = 0.95;
-    
-    if (scrollY <= 0) return minOpacity;
-    if (scrollY >= maxScroll) return maxOpacity;
-    
-    return minOpacity + (maxOpacity - minOpacity) * (scrollY / maxScroll);
-  };
 
   return (
     <div className={styles.container}>
-      {/* 光影特效背景 */}
-      <div 
-        className={styles.glowEffect}
-        style={{
-          left: mousePos.x - 300,
-          top: mousePos.y - 300,
-        }}
+      {/* Canvas光线跟随效果 */}
+      <canvas 
+        ref={canvasRef}
+        className={styles.mouseTrailCanvas}
       />
       
       {/* 粒子背景 */}
@@ -73,19 +204,41 @@ export default function Layout() {
 
       {/* 顶部导航 */}
       <header 
-        className={styles.header}
-        style={{
-          background: `rgba(10, 10, 10, ${getHeaderOpacity()})`,
-          transition: 'background 0.3s ease',
-        }}
+        className={`${styles.header} ${styles.glassHeader}`}
       >
         <div className={styles.headerContent}>
           <div className={styles.logo}>
             <div className={styles.logoIcon}>🤖</div>
             <span className={styles.logoText}>AI Life</span>
           </div>
-          <Nav />
+          
+          {/* 桌面端导航 */}
+          <div className={styles.desktopNav}>
+            <Nav />
+          </div>
+          
+          {/* 移动端菜单按钮 */}
+          <button 
+            className={styles.mobileMenuBtn}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <div className={`${styles.hamburger} ${isMobileMenuOpen ? styles.active : ''}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+          
           <div className={styles.headerActions}>
+            <button className={styles.loginBtn}>登录</button>
+            <button className={styles.signupBtn}>注册</button>
+          </div>
+        </div>
+        
+        {/* 移动端下拉菜单 */}
+        <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
+          <Nav onItemClick={() => setIsMobileMenuOpen(false)} />
+          <div className={styles.mobileActions}>
             <button className={styles.loginBtn}>登录</button>
             <button className={styles.signupBtn}>注册</button>
           </div>

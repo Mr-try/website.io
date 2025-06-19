@@ -16,7 +16,12 @@ const NAVS = [
   { title: '常见问题', link: '/faq' },
   { title: '关于我们', link: '/about' },
 ];
-export default function Layout() {
+
+interface NavProps {
+  onItemClick?: () => void;
+}
+
+export default function Layout({ onItemClick }: NavProps) {
   const { pathname } = useLocation();
   const [index, setIndex] = useState(0);
   const [style, setStyle] = useState({});
@@ -40,6 +45,7 @@ export default function Layout() {
           onClick={() => {
             setIndex(j);
             goto(nav.link);
+            onItemClick?.(); // 移动端点击后关闭菜单
           }}
         >
           {nav.title}

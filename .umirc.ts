@@ -22,7 +22,7 @@ export default defineConfig({
     function setFontSize() {
       const designedWidth = 1440;
       const fontSize = document.documentElement.clientWidth / designedWidth
-      document.documentElement.style.fontSize = fontSize * 10 + 'px';
+      document.documentElement.style.fontSize = fontSize * 16 + 'px';
     }
     setFontSize()`,
   ],
