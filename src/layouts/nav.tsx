@@ -25,6 +25,15 @@ export default function Layout({ onItemClick }: NavProps) {
   const { pathname } = useLocation();
   const [index, setIndex] = useState(0);
   const [style, setStyle] = useState({});
+  
+  // 根据当前路径初始化index
+  useEffect(() => {
+    const currentIndex = NAVS.findIndex(nav => nav.link === pathname);
+    if (currentIndex !== -1) {
+      setIndex(currentIndex);
+    }
+  }, [pathname]);
+  
   useEffect(() => {
     const crt: any = document.querySelectorAll('.navCell')[index];
     if (crt) {

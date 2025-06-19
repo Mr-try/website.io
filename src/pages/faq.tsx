@@ -1,3 +1,8 @@
+/*
+ * @Author: 唐荣洋 daoma.try@raycloud.com
+ * @Date: 2025-06-19 09:39:33
+ * @Description: 
+ */
 import { useState } from 'react';
 import styles from './faq.less';
 
@@ -41,7 +46,7 @@ export default function FAQPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <div className={styles.faqHeader}>
         <h1 className={styles.title}>常见问题</h1>
         <p className={styles.subtitle}>为您解答关于 AI Life 的疑问</p>
       </div>

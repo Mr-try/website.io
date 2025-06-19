@@ -3,7 +3,7 @@
  * @Date: 2025-06-19 09:39:20
  * @Description: 
  */
-import styles from './features.less';
+import styles from './features.module.less';
 
 export default function FeaturesPage() {
   const features = [
@@ -47,7 +47,7 @@ export default function FeaturesPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <div className={styles.featuresHeader}>
         <h1 className={styles.title}>强大功能</h1>
         <p className={styles.subtitle}>用 AI 技术重新定义生活养成体验</p>
       </div>
